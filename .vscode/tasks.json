@@ -39,7 +39,7 @@
       "label": "proj: Generate report",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "pastime generate-report --days=7"],
+      "args": ["-Command", "lookback generate-report --days=7"],
       "problemMatcher": []
     },
     {
@@ -48,7 +48,7 @@
       "command": "pwsh",
       "args": [
         "-Command",
-        "pastime get-comments '${input:board}' '${input:card}' --days=${input:days}"
+        "lookback get-comments '${input:board}' '${input:card}' --days=${input:days}"
       ],
       "problemMatcher": []
     },
@@ -58,7 +58,7 @@
       "command": "pwsh",
       "args": [
         "-Command",
-        "pastime generate-model 'G:/My Drive/Blake/School/Grad/Time Tracking/Trello/JSON/Latest/c1tDMXSa.json' src/pastime/model.py"
+        "lookback generate-model 'G:/My Drive/Blake/School/Grad/Time Tracking/Trello/JSON/Latest/c1tDMXSa.json' src/lookback/model.py"
       ],
       "problemMatcher": []
     },
@@ -66,7 +66,7 @@
       "label": "proj: Generate schema",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "pastime generate-schema"],
+      "args": ["-Command", "lookback generate-schema"],
       "problemMatcher": []
     },
 

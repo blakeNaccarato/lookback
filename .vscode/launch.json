@@ -10,7 +10,7 @@
       "cwd": "${workspaceFolder}",
       "type": "python",
       "request": "launch",
-      "module": "pastime",
+      "module": "lookback",
       "args": ["generate-report"],
       "console": "internalConsole"
     },
@@ -19,7 +19,7 @@
       "cwd": "${workspaceFolder}",
       "type": "python",
       "request": "launch",
-      "module": "pastime",
+      "module": "lookback",
       "args": [
         "get-comments",
         "Process data",

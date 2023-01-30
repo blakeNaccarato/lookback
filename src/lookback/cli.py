@@ -7,8 +7,8 @@ from datamodel_code_generator import InputFileType, PythonVersion, generate
 import pyperclip
 from typer import Typer
 
-from pastime import api, configs
-from pastime.defaults import boards, config
+from lookback import api, configs
+from lookback.defaults import boards, config
 
 app = Typer()
 

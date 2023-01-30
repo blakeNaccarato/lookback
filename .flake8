@@ -59,7 +59,7 @@ ignore =
 
 per-file-ignores =
 
-    src/pastime/board.py:
+    src/lookback/board.py:
         ; id is a common field
         A003,
 

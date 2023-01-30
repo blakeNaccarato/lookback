@@ -1,5 +1,5 @@
-import pastime
+import lookback
 
 
 def test():
-    pastime.__version__
+    lookback.__version__

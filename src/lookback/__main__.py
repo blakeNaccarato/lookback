@@ -1,5 +1,5 @@
 """Alternative entry to the CLI."""
 
-from pastime.cli import app
+from lookback.cli import app
 
 app()

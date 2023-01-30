@@ -1,11 +1,11 @@
-"""Configure pastime."""
+"""Configure lookback."""
 
 from pathlib import Path
 import tomllib
 
 from pydantic import BaseModel, DirectoryPath, Extra, Field
 
-APPDIR = Path("~/.pastime").expanduser()
+APPDIR = Path("~/.lookback").expanduser()
 
 
 def init():

@@ -6,6 +6,6 @@ more.
 
 __version__ = "0.0.0"
 
-from pastime.configs import init
+from lookback.configs import init
 
 init()
