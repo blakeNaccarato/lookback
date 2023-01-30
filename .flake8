@@ -59,7 +59,7 @@ ignore =
 
 per-file-ignores =
 
-    src/mindful/board.py:
+    src/thread/board.py:
         ; id is a common field
         A003,
 

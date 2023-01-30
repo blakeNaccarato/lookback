@@ -1,5 +1,5 @@
 """Alternative entry to the CLI."""
 
-from mindful.cli import app
+from thread.cli import app
 
 app()

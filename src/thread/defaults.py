@@ -3,8 +3,8 @@
 import json
 from pathlib import Path
 
-from mindful import board
-from mindful.configs import get_config
+from thread import board
+from thread.configs import get_config
 
 config = get_config()
 

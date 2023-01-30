@@ -1,11 +1,11 @@
-"""Configure mindful."""
+"""Configure thread."""
 
 from pathlib import Path
-
-from pydantic import BaseModel, DirectoryPath, Extra, Field
 import tomllib
 
-APPDIR = Path("~/.mindful").expanduser()
+from pydantic import BaseModel, DirectoryPath, Extra, Field
+
+APPDIR = Path("~/.thread").expanduser()
 
 
 def init():

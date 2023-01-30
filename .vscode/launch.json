@@ -10,7 +10,7 @@
       "cwd": "${workspaceFolder}",
       "type": "python",
       "request": "launch",
-      "module": "mindful",
+      "module": "thread",
       "args": ["generate-report"],
       "console": "internalConsole"
     },
@@ -19,7 +19,7 @@
       "cwd": "${workspaceFolder}",
       "type": "python",
       "request": "launch",
-      "module": "mindful",
+      "module": "thread",
       "args": [
         "get-comments",
         "Process data",

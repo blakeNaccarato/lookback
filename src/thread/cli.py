@@ -7,8 +7,8 @@ from datamodel_code_generator import InputFileType, PythonVersion, generate
 import pyperclip
 from typer import Typer
 
-from mindful import api, configs
-from mindful.defaults import boards, config
+from thread import api, configs
+from thread.defaults import boards, config
 
 app = Typer()
 
