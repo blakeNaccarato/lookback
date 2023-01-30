@@ -3,8 +3,8 @@
 import json
 from pathlib import Path
 
-from past import board
-from past.configs import get_config
+from pastime import board
+from pastime.configs import get_config
 
 config = get_config()
 

@@ -2,8 +2,8 @@
 
 from datetime import datetime, timedelta
 
-from past import board
-from past.times import end_of_today
+from pastime import board
+from pastime.times import end_of_today
 
 
 def agg_comments(comments: list[board.Action]) -> list[board.Action]:

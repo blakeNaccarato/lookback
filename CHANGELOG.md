@@ -13,5 +13,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - No features yet
 
-[unreleased]: https://github.com/blakeNaccarato/past/compare/0.0.0...HEAD
-[0.0.0]: https://github.com/blakeNaccarato/past/releases/tag/0.0.0
+[unreleased]: https://github.com/blakeNaccarato/pastime/compare/0.0.0...HEAD
+[0.0.0]: https://github.com/blakeNaccarato/pastime/releases/tag/0.0.0

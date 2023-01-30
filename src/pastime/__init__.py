@@ -6,6 +6,6 @@ more.
 
 __version__ = "0.0.0"
 
-from past.configs import init
+from pastime.configs import init
 
 init()

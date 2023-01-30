@@ -1,5 +1,5 @@
-import past
+import pastime
 
 
 def test():
-    past.__version__
+    pastime.__version__
