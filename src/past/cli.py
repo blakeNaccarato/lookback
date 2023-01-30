@@ -7,8 +7,8 @@ from datamodel_code_generator import InputFileType, PythonVersion, generate
 import pyperclip
 from typer import Typer
 
-from thread import api, configs
-from thread.defaults import boards, config
+from past import api, configs
+from past.defaults import boards, config
 
 app = Typer()
 

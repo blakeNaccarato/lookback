@@ -3,8 +3,8 @@
 import json
 from pathlib import Path
 
-from thread import board
-from thread.configs import get_config
+from past import board
+from past.configs import get_config
 
 config = get_config()
 

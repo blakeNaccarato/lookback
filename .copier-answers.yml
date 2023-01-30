@@ -4,7 +4,7 @@ _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-latest
 advanced: false
 docs_engine: MYST
-github_repo_name: thread
+github_repo_name: past
 include_funding: true
 override: false
 override_codecov: false
@@ -24,8 +24,8 @@ override_vscode_extensions: false
 override_vscode_launch: false
 override_vscode_settings: false
 override_vscode_tasks: true
-project_email: blake.naccarato+thread@gmail.com
-project_name: thread
+project_email: blake.naccarato+past@gmail.com
+project_name: past
 project_owner_github_username: blakeNaccarato
 project_owner_name: Blake Naccarato
 python_version: '3.11'

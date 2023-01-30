@@ -1,5 +1,5 @@
-import thread
+import past
 
 
 def test():
-    thread.__version__
+    past.__version__

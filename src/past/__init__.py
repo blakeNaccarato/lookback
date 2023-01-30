@@ -6,6 +6,6 @@ more.
 
 __version__ = "0.0.0"
 
-from thread.configs import init
+from past.configs import init
 
 init()

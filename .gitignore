@@ -5,7 +5,7 @@
 
 # For ignoring the symlinked local configuration directory
 .reports
-.thread
+.past
 
 ## * -------------------------------------------------------------------------------- * #
 # * TEMPLATE-SPECIFIC

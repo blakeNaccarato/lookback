@@ -1,11 +1,11 @@
-"""Configure thread."""
+"""Configure past."""
 
 from pathlib import Path
 import tomllib
 
 from pydantic import BaseModel, DirectoryPath, Extra, Field
 
-APPDIR = Path("~/.thread").expanduser()
+APPDIR = Path("~/.past").expanduser()
 
 
 def init():
