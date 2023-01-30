@@ -6,6 +6,7 @@ more.
 
 __version__ = "0.0.0"
 
-from lookback.configs import init
+from lookback import configs, rich
 
-init()
+configs.init()
+rich.init()
