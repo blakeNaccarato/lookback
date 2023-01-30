@@ -1,6 +1,6 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 81f33bb
-_src_path: gh:blakeNaccarato/copier-python-init
+_commit: e919b15
+_src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-latest
 advanced: false
 docs_engine: MYST

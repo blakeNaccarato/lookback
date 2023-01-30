@@ -1,8 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":preserveSemverRanges", "group:allNonMajor"],
-  "automerge": true,
-  "enabledManagers": ["pip_requirements"],
+  "extends": [
+    "config:base",
+    "group:allNonMajor",
+    ":automergeAll",
+
+    ":preserveSemverRanges"
+  ],
+  "enabledManagers": ["pip_requirements", "git-submodules"],
+  "git-submodules": { "enabled": true },
   "packageRules": [
     {
       "groupName": "package",

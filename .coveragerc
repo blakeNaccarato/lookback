@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = mindful
+source = thread
 
 [report]
 
