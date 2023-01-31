@@ -39,7 +39,7 @@
       "label": "proj: Generate report",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "lookback generate-report --days=7"],
+      "args": ["-Command", "lookback generate-report --days=90"],
       "problemMatcher": []
     },
     {

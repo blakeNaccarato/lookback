@@ -6,13 +6,23 @@ from lookback import board
 from lookback.times import end_of_today
 
 
-def agg_comments(comments: list[board.Action]) -> list[board.Action]:
+def agg_comments(kept_comments: list[board.Action]) -> list[board.Action]:
     """Aggregate comments by their header."""
+
+    # Split comments which represent multiple headings into individual comments
+    split_comments: list[board.Action] = []
+    for comment in kept_comments:
+        if comment.data.text.count("###") > 1:
+            split_comments.extend(split_comment(comment))
+        else:
+            split_comments.append(comment)
+
+    # Aggregate comments associated with the same heading
     misc_heading = "### Miscellaneous"
-    texts = [comment.data.text for comment in comments]
+    texts = [comment.data.text for comment in split_comments]
     seen: dict[str, board.Action] = {}
     keep: list[bool] = []
-    for text, comment in zip(texts, comments):
+    for text, comment in zip(texts, split_comments):
         (first_line, *rest) = text.split("\n\n")
         if not first_line.startswith("###"):
             first_line = misc_heading
@@ -27,10 +37,23 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
                     keep.append(True)
             case _:
                 raise ValueError(f"Invalid comment: {comment.data.text}")
-    comments = [comment for comment, keep in zip(comments, keep) if keep]
+    kept_comments = [comment for comment, keep in zip(split_comments, keep) if keep]
+
+    # Return comments with the "Miscellaneous" heading at the end
     return sorted(
-        comments, key=lambda comment: comment.data.text.startswith(misc_heading)
+        kept_comments, key=lambda comment: comment.data.text.startswith(misc_heading)
     )
+
+
+def split_comment(comment: board.Action) -> list[board.Action]:
+    """Split a comment with multiple headers into comments representing one header."""
+    texts = [f"### {text}" for text in comment.data.text.split("### ")[1:]]
+    comments: list[board.Action] = []
+    for text in texts:
+        subcomment = comment.copy()
+        subcomment.data.text = text
+        comments.append(subcomment)
+    return comments
 
 
 def sort_comments(comments: list[board.Action]) -> list[board.Action]:
