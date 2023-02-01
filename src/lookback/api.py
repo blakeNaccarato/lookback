@@ -1,18 +1,19 @@
 """API"""
 
 from datetime import datetime, timedelta
+import re
 
 from lookback import board
 from lookback.times import end_of_today
 
 
-def agg_comments(kept_comments: list[board.Action]) -> list[board.Action]:
+def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     """Aggregate comments by their header."""
 
     # Split comments which represent multiple headings into individual comments
     split_comments: list[board.Action] = []
-    for comment in kept_comments:
-        if comment.data.text.count("###") > 1:
+    for comment in comments:
+        if len(re.findall(r"^### ", comment.data.text, re.MULTILINE)) > 1:
             split_comments.extend(split_comment(comment))
         else:
             split_comments.append(comment)
@@ -50,7 +51,7 @@ def split_comment(comment: board.Action) -> list[board.Action]:
     texts = [f"### {text}" for text in comment.data.text.split("### ")[1:]]
     comments: list[board.Action] = []
     for text in texts:
-        subcomment = comment.copy()
+        subcomment = comment.copy(deep=True)
         subcomment.data.text = text
         comments.append(subcomment)
     return comments
