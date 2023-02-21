@@ -1,5 +1,12 @@
 {
   "version": "0.2.0",
+  "inputs": [
+    {
+      "id": "days",
+      "description": "Number of days to look back",
+      "type": "promptString"
+    }
+  ],
   "configurations": [
     // * -------------------------------------------------------------------------- * //
     // * PROJECT-SPECIFIC * //
@@ -11,7 +18,7 @@
       "type": "python",
       "request": "launch",
       "module": "lookback",
-      "args": ["generate-report"],
+      "args": ["generate-report", "--days", "${input:days}"],
       "console": "internalConsole"
     },
     {

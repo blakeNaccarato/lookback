@@ -6,6 +6,8 @@ import re
 from lookback import board
 from lookback.times import end_of_today
 
+TASK = re.compile(r"^### ", re.MULTILINE)
+
 
 def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     """Aggregate comments by their header."""
@@ -13,7 +15,7 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     # Split comments which represent multiple headings into individual comments
     split_comments: list[board.Action] = []
     for comment in comments:
-        if len(re.findall(r"^### ", comment.data.text, re.MULTILINE)) > 1:
+        if len(TASK.findall(comment.data.text)) > 1:
             split_comments.extend(split_comment(comment))
         else:
             split_comments.append(comment)
@@ -25,7 +27,7 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     keep: list[bool] = []
     for text, comment in zip(texts, split_comments):
         (first_line, *rest) = text.split("\n\n")
-        if not first_line.startswith("###"):
+        if not TASK.match(first_line):
             first_line = misc_heading
             comment.data.text = f"{first_line}\n\n{comment.data.text}"
         match first_line.split():
@@ -37,7 +39,7 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
                     seen[first_line] = comment
                     keep.append(True)
             case _:
-                raise ValueError(f"Invalid comment: {comment.data.text}")
+                raise ValueError(f"Invalid comment:\n\n{comment.data.text}")
     kept_comments = [comment for comment, keep in zip(split_comments, keep) if keep]
 
     # Return comments with the "Miscellaneous" heading at the end
