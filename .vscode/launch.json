@@ -9,9 +9,8 @@
   ],
   "configurations": [
     // * -------------------------------------------------------------------------- * //
-    // * PROJECT-SPECIFIC * //
-    // Introduce any project-specific debug configurations here.
-    // Be sure to say override this file in the Copier questionnaire to keep changes.
+    // * Changes below should persist in significant template updates.
+
     {
       "name": "CLI: Generate report",
       "cwd": "${workspaceFolder}",
@@ -35,8 +34,9 @@
       ],
       "console": "internalConsole"
     },
+
     // * -------------------------------------------------------------------------- * //
-    // * GENERAL * //
+    // * Changes below may be lost in significant template updates.
     {
       "name": "Python: Current file",
       "type": "python",
@@ -45,7 +45,7 @@
       "console": "internalConsole"
     },
     {
-      "name": "Python: Current file: Not just my code",
+      "name": "Python: Current file, not just my code",
       "type": "python",
       "request": "launch",
       "program": "${file}",

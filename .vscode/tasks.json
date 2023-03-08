@@ -34,7 +34,8 @@
   ],
   "tasks": [
     // * -------------------------------------------------------------------------- * //
-    // * PROJECT-SPECIFIC * //
+    // * Changes below should persist in significant template updates.
+
     {
       "label": "proj: Generate report",
       "type": "process",
@@ -71,22 +72,24 @@
     },
 
     // * -------------------------------------------------------------------------- * //
-    // * GIT * //
-    {
-      "label": "git: Rebase back to fork",
-      "type": "process",
-      "command": "git",
-      "args": ["rebase", "-i", "--fork-point", "main"],
-      "problemMatcher": []
-    },
+    // * Changes below may be lost in significant template updates.
 
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
     {
-      "label": "setup: Initialize template",
+      "label": "setup: Bump template",
       "type": "process",
       "command": "pwsh",
-      "args": [".tools/scripts/init_template.ps1"],
+      "args": [".tools/scripts/Update-Template.ps1"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Recopy template",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tools/scripts/Copy-Template.ps1"],
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
@@ -94,6 +97,7 @@
       "type": "process",
       "command": "pwsh",
       "args": ["setup.ps1"],
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
@@ -101,52 +105,10 @@
       "type": "process",
       "command": "pwsh",
       "args": ["update.ps1"],
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
-    // * PRE-COMMIT * //
-
-    {
-      "label": "pre-commit: All files",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "pre-commit run --all-files"],
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
-    // * OTHER TASKS * //
-
-    {
-      "label": "task: sphinx-autobuild docs (preview)",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "sphinx-autobuild docs _site"],
-      "problemMatcher": []
-    },
-    {
-      "label": "task: snakeviz",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "snakeviz .prof"],
-      "problemMatcher": []
-    },
-    {
-      "label": "task: autoflake current file",
-      "type": "process",
-      "command": "pwsh",
-      "args": [
-        "-Command",
-        "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}"
-      ],
-      "problemMatcher": []
-    },
-    {
-      "label": "task: pytest-cov: Generate coverage",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "pytest --cov --cov-report xml"],
+      "icon": { "id": "file-symlink-directory" },
+      // "runOptions": {
+      //   "runOn": "folderOpen"
+      // },
       "problemMatcher": []
     },
     {
@@ -157,13 +119,56 @@
         "-Command",
         "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
       ],
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
+
+    // * -------------------------------------------------------------------------- * //
+    // * PRE-COMMIT * //
+    {
+      "label": "pre-commit",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit"],
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+    {
+      "label": "pre-commit",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit run --all-files"],
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * GIT * //
+    {
+      "label": "git: Rebase back to fork",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git rebase -i --fork-point main"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+    {
+      "label": "git: Stage all files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git add -A"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * BLACK * //
     {
       "label": "task: black: Ignore magic comma in this file",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C ${file}"],
+      "icon": { "id": "code" },
       "problemMatcher": []
     },
     {
@@ -171,6 +176,46 @@
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C src tests"],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * OTHER TASKS * //
+    {
+      "label": "task: sphinx-autobuild docs (preview)",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "sphinx-autobuild docs _site"],
+      "icon": { "id": "book" },
+      "problemMatcher": []
+    },
+
+    {
+      "label": "task: snakeviz",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "snakeviz .prof"],
+      "icon": { "id": "graph-line" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: autoflake current file",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}"
+      ],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: pytest-cov: Generate coverage",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pytest --cov --cov-report xml"],
+      "icon": { "id": "beaker" },
       "problemMatcher": []
     }
   ]
