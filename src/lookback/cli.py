@@ -1,10 +1,10 @@
-"""CLI"""
+"""CLI."""
 
 from datetime import datetime
 from pathlib import Path
 
-from datamodel_code_generator import InputFileType, PythonVersion, generate
 import pyperclip
+from datamodel_code_generator import InputFileType, PythonVersion, generate
 from typer import Typer
 
 from lookback import api, configs

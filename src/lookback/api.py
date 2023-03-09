@@ -1,7 +1,7 @@
-"""API"""
+"""API."""
 
-from datetime import datetime, timedelta
 import re
+from datetime import datetime, timedelta
 
 from lookback import board
 from lookback.times import end_of_today
@@ -25,7 +25,7 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     texts = [comment.data.text for comment in split_comments]
     seen: dict[str, board.Action] = {}
     keep: list[bool] = []
-    for text, comment in zip(texts, split_comments):
+    for text, comment in zip(texts, split_comments, strict=True):
         (first_line, *rest) = text.split("\n\n")
         if not TASK.match(first_line):
             first_line = misc_heading
@@ -40,7 +40,9 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
                     keep.append(True)
             case _:
                 raise ValueError(f"Invalid comment:\n\n{comment.data.text}")
-    kept_comments = [comment for comment, keep in zip(split_comments, keep) if keep]
+    kept_comments = [
+        comment for comment, keep in zip(split_comments, keep, strict=True) if keep
+    ]
 
     # Return comments with the "Miscellaneous" heading at the end
     return sorted(

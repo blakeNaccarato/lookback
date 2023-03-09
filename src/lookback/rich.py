@@ -5,7 +5,6 @@ Avoid activating Rich features that break functionality outside of the REPL.
 
 
 def init():
-
     from rich import traceback
 
     traceback.install()

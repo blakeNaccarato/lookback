@@ -1,7 +1,7 @@
 """Configure lookback."""
 
-from pathlib import Path
 import tomllib
+from pathlib import Path
 
 from pydantic import BaseModel, DirectoryPath, Extra, Field
 
@@ -16,7 +16,7 @@ def init():
 
 class MyBaseModel(BaseModel):
     class Config:
-        """Model configuration"""
+        """Model configuration."""
 
         extra = Extra.forbid  # To forbid extra fields
 
