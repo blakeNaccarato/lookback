@@ -33,7 +33,7 @@ def generate_report(days: int = 8, output: Path = REPORT):
         comments_by_card = [api.filter_comments(comments, card=card) for card in cards]
         comments_in_cards = {
             card: api.sort_comments(comments)
-            for card, comments in zip(cards, comments_by_card)
+            for card, comments in zip(cards, comments_by_card, strict=True)
         }
         if comments:
             report += f"# {board.name}\n\n"

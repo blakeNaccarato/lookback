@@ -19,6 +19,7 @@ def init():
 def is_notebook_or_ipython() -> bool:
     try:
         shell = get_ipython().__class__.__name__  # type: ignore  # Dynamic
-        return shell == "TerminalInteractiveShell"
     except NameError:
         return False  # Probably standard Python interpreter
+    else:
+        return shell == "TerminalInteractiveShell"
