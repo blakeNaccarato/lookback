@@ -4,8 +4,6 @@ Utilities for analyzing Trello boards for time tracking, estimation, report writ
 more.
 """
 
-__version__ = "0.0.0"
-
 from lookback import configs, rich
 
 configs.init()
