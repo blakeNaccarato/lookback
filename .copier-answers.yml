@@ -1,8 +1,10 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 1bbbc7c
+_commit: 180a0f9
 _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-latest
 github_repo_name: lookback
+project_description: Utilities for analyzing Trello boards for time tracking, estimation,
+    report writing, and more
 project_email: blake.naccarato+lookback@gmail.com
 project_name: lookback
 project_owner_github_username: blakeNaccarato

@@ -4,16 +4,24 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "lookback"
-requires-python = ">=3.11"
-dependencies = [ "datamodel-code-generator~=0.18.0", "pyperclip~=1.8.2", "typer~=0.7.0", "rich~=13.3.1",]
+version = "0.0.0"
+description = "Utilities for analyzing Trello boards for time tracking, estimation, report writing, and more"
 readme = "README.md"
-dynamic = [ "version", "description",]
+requires-python = ">=3.11"
+classifiers = [ "License :: OSI Approved :: MIT License",]
+dependencies = [ "datamodel-code-generator~=0.18.0", "pyperclip~=1.8.2", "typer~=0.7.0", "rich~=13.3.1",]
 [[project.authors]]
 name = "Blake Naccarato"
 email = "blake.naccarato+lookback@gmail.com"
 
+[project.license]
+file = "LICENSE"
+
 [project.urls]
+Changes = "https://github.com/blakeNaccarato/lookback/changelog.html"
+Docs = "https://github.com/blakeNaccarato.github.io/lookback"
 Home = "https://github.com/blakeNaccarato/lookback"
+Tracker = "https://github.com/blakeNaccarato/lookback/issues"
 
 [tool.ruff]
 fix = true
