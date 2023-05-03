@@ -40,7 +40,8 @@
       "label": "proj: Generate report",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "lookback generate-report --days=90"],
+      "args": ["-Command", "lookback generate-report --days=${input:days}"],
+      "icon": { "id": "repo" },
       "problemMatcher": []
     },
     {
@@ -51,6 +52,7 @@
         "-Command",
         "lookback get-comments '${input:board}' '${input:card}' --days=${input:days}"
       ],
+      "icon": { "id": "repo" },
       "problemMatcher": []
     },
     {
@@ -61,6 +63,7 @@
         "-Command",
         "lookback generate-model 'G:/My Drive/Blake/School/Grad/Time Tracking/Trello/JSON/Latest/c1tDMXSa.json' src/lookback/model.py"
       ],
+      "icon": { "id": "repo" },
       "problemMatcher": []
     },
     {
@@ -68,6 +71,7 @@
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "lookback generate-schema"],
+      "icon": { "id": "repo" },
       "problemMatcher": []
     },
 
