@@ -52,7 +52,7 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
 
 def split_comment(comment: board.Action) -> list[board.Action]:
     """Split a comment with multiple headers into comments representing one header."""
-    texts = [f"### {text}" for text in comment.data.text.split("### ")[1:]]
+    texts = [f"### {text}" for text in TASK.split(comment.data.text)[1:]]
     comments: list[board.Action] = []
     for text in texts:
         subcomment = comment.copy(deep=True)
