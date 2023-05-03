@@ -9,6 +9,11 @@ from lookback.times import end_of_today
 TASK = re.compile(r"^### ", re.MULTILINE)
 
 
+def indent_report(report: str, title: str) -> str:
+    """Indent all headings in a report and give it a top-level heading."""
+    return f"# {title}\n\n{report}"
+
+
 def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     """Aggregate comments by their header."""
 

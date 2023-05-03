@@ -42,7 +42,7 @@ def generate_report(days: int = 8, output: Path = REPORT):
             report += f"## {card}\n\n"
             report += "\n\n".join([comment.data.text for comment in comments])
             report += "\n\n"
-        output.write_text(report, encoding="utf-8")
+    output.write_text(api.indent_report(report, output.stem), encoding="utf-8")
 
 
 @app.command()
