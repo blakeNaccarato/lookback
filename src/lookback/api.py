@@ -6,12 +6,16 @@ from datetime import datetime, timedelta
 from lookback import board
 from lookback.times import end_of_today
 
-TASK = re.compile(r"^### ", re.MULTILINE)
+SPACE = " "
+HEAD3 = "###"
+ANY_HEAD_CONTENTS = re.compile(r"^#+\s.*", re.MULTILINE)
+HEAD3_TOKEN = re.compile(rf"^{HEAD3}{SPACE}", re.MULTILINE)
 
 
 def indent_report(report: str, title: str) -> str:
     """Indent all headings in a report and give it a top-level heading."""
-    return f"# {title}\n\n{report}"
+    report_indented = ANY_HEAD_CONTENTS.sub(r"#\g<0>", report)
+    return f"# {title}\n\n{report_indented}"
 
 
 def agg_comments(comments: list[board.Action]) -> list[board.Action]:
@@ -20,21 +24,20 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     # Split comments which represent multiple headings into individual comments
     split_comments: list[board.Action] = []
     for comment in comments:
-        if len(TASK.findall(comment.data.text)) > 1:
-            split_comments.extend(split_comment(comment))
-        else:
-            split_comments.append(comment)
+        split_comments.extend(split_comment(comment))
 
     # Aggregate comments associated with the same heading
-    misc_heading = "### Miscellaneous"
+    misc_heading = f"{HEAD3}{SPACE}Miscellaneous"
     texts = [comment.data.text for comment in split_comments]
     seen: dict[str, board.Action] = {}
     keep: list[bool] = []
     for text, comment in zip(texts, split_comments, strict=True):
         (first_line, *rest) = text.split("\n\n")
-        if not TASK.match(first_line):
+        if not HEAD3_TOKEN.match(first_line):
             first_line = misc_heading
             comment.data.text = f"{first_line}\n\n{comment.data.text}"
+        # TODO: Replace match/case with regex. Brittle code here due to cases not being
+        # TODO: able to use HEAD3 without binding it.
         match first_line.split():
             case ["###", *_]:
                 if prev_comment := seen.get(first_line):
@@ -57,7 +60,9 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
 
 def split_comment(comment: board.Action) -> list[board.Action]:
     """Split a comment with multiple headers into comments representing one header."""
-    texts = [f"### {text}" for text in TASK.split(comment.data.text)[1:]]
+    texts = [
+        f"{HEAD3}{SPACE}{text}" for text in HEAD3_TOKEN.split(comment.data.text)[1:]
+    ]
     comments: list[board.Action] = []
     for text in texts:
         subcomment = comment.copy(deep=True)
