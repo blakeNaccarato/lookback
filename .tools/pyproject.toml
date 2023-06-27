@@ -11,17 +11,17 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "lookback"
 version = "0.0.0"
-description = "Utilities for analyzing Trello boards for time tracking, estimation, report writing, and more"
+description = "Utilities for analyzing Trello boards for time tracking, estimation, report writing, and more."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
 classifiers = ["License :: OSI Approved :: MIT License"]
 [[project.authors]]
 name = "Blake Naccarato"
-email = "blake.naccarato+lookback@gmail.com"
+email = "blake.naccarato@gmail.com"
 [project.urls]
-Changes = "https://github.com/blakeNaccarato/lookback/changelog.html"
-Docs = "https://github.com/blakeNaccarato.github.io/lookback"
+Changes = "https://blakeNaccarato.github.io/lookback/changelog.html"
+Docs = "https://blakeNaccarato.github.io/lookback"
 Home = "https://github.com/blakeNaccarato/lookback"
 Tracker = "https://github.com/blakeNaccarato/lookback/issues"
 
@@ -59,11 +59,14 @@ ignore = [
     "PD901",   # Allow `df` variable name. We are all consenting adults here.
     "PD011",   # Allow use of `.values`. False positives.
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
+    "PIE804",  # Allow dict unpack even if unnecessary, consisent for df.assign{**...}
     "PLR0913", # Allow more than five function arguments
+    "PLR2004", # Allow magic values. This check is too sensitive
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
     "S301",    # Don't warn about pickling. Allow me to shoot myself in the foot.
     "TCH",     # Type checking linter doesn't play nicely with pydantic
+    "TD",      # Disable to-do validation. Too pedantic for now.
     "TRY003",  # Allow long exception messages
     "W2",      # Allow whitespace issues. Fixed automatically by black.
     # * ---------------------------------------------------------------------------- * #
@@ -96,6 +99,9 @@ convention = "google"
 split-on-trailing-comma = false
 
 [tool.ruff.per-file-ignores]
+"docs/**" = [
+    "E402", # Need to allow imports below patches in docs notebooks
+]
 "tests/**" = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below should persist in significant template updates.
