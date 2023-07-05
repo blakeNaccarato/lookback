@@ -10,6 +10,7 @@ SPACE = " "
 HEAD3 = "###"
 ANY_HEAD_CONTENTS = re.compile(r"^#+\s.*", re.MULTILINE)
 HEAD3_TOKEN = re.compile(rf"^{HEAD3}{SPACE}", re.MULTILINE)
+MISC_HEADING = f"{HEAD3}{SPACE}Miscellaneous"
 
 
 def indent_report(report: str, title: str) -> str:
@@ -27,14 +28,13 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
         split_comments.extend(split_comment(comment))
 
     # Aggregate comments associated with the same heading
-    misc_heading = f"{HEAD3}{SPACE}Miscellaneous"
     texts = [comment.data.text for comment in split_comments]
     seen: dict[str, board.Action] = {}
     keep: list[bool] = []
     for text, comment in zip(texts, split_comments, strict=True):
         (first_line, *rest) = text.split("\n\n")
         if not HEAD3_TOKEN.match(first_line):
-            first_line = misc_heading
+            first_line = MISC_HEADING
             comment.data.text = f"{first_line}\n\n{comment.data.text}"
         # TODO: Replace match/case with regex. Brittle code here due to cases not being
         # TODO: able to use HEAD3 without binding it.
@@ -54,12 +54,14 @@ def agg_comments(comments: list[board.Action]) -> list[board.Action]:
 
     # Return comments with the "Miscellaneous" heading at the end
     return sorted(
-        kept_comments, key=lambda comment: comment.data.text.startswith(misc_heading)
+        kept_comments, key=lambda comment: comment.data.text.startswith(MISC_HEADING)
     )
 
 
 def split_comment(comment: board.Action) -> list[board.Action]:
     """Split a comment with multiple headers into comments representing one header."""
+    if HEAD3 not in comment.data.text:
+        comment.data.text = f"{MISC_HEADING}\n\n{comment.data.text}"
     texts = [
         f"{HEAD3}{SPACE}{text}" for text in HEAD3_TOKEN.split(comment.data.text)[1:]
     ]
