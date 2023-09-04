@@ -283,11 +283,11 @@ class Card(BaseModel):
     desc: str | None = None
     pos: float | None = None
     id_labels: list[str] | None = Field(None, alias="idLabels")
-    start: str | None | None = None
+    start: str | None = None
     id_list: str | None = Field(None, alias="idList")
     closed: bool | None = None
     due_reminder: int | None = Field(None, alias="dueReminder")
-    due: str | None | None = None
+    due: str | None = None
     id_members: list[str] | None = Field(None, alias="idMembers")
 
 
@@ -329,12 +329,12 @@ class Old(BaseModel):
     desc: str | None = None
     pos: float | None = None
     id_labels: list[str] | None = Field(None, alias="idLabels")
-    start: str | None | None = None
+    start: str | None = None
     id_list: str | None = Field(None, alias="idList")
     closed: bool | None = None
     name: str | None = None
     due_reminder: Any | None = Field(None, alias="dueReminder")
-    due: str | None | None = None
+    due: str | None = None
     id_members: list[str] | None = Field(None, alias="idMembers")
     prefs: Prefs2 | None = None
 
