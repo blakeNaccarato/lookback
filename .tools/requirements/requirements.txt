@@ -1,0 +1,6 @@
+# Latest working requirements of your package, should be ahead of pyproject.toml.
+datamodel-code-generator==0.18.0
+pydantic==1.9.2
+pyperclip==1.8.2
+typer==0.7.0
+rich==13.5.2
