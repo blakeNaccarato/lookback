@@ -1,42 +1,34 @@
-// Calling `pwsh` first leverages my personal $PROFILE to activate `.venv`.
-// Alternatively, we could use `.venv/Scripts/python.exe` and change the `args`, but
-// this is platform-specific anyways.
+// Run tasks like `pwsh -C ". scripts/Initialize-Shell.ps1; {task}` to run profile-like
+// commands without requiring users to modify global profile.
 
 {
   "version": "2.0.0",
   "inputs": [
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below should persist in significant template updates.
-
+    {
+      "id": "dependency",
+      "type": "promptString",
+      "description": "Show tree of packages requesting this dependency."
+    },
+    {
+      "id": "templateOptions",
+      "description": "Template options.",
+      "type": "pickString",
+      "options": ["", "-Stay", "-Stay -Prompt", "-Recopy -Prompt"]
+    },
+    {
+      "id": "changeType",
+      "description": "Change type.",
+      "type": "pickString",
+      "options": ["breaking", "deprecation", "change"]
+    },
     {
       "id": "days",
       "type": "promptString",
       "description": "days",
       "default": "0"
-    },
-
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below may be lost in significant template updates.
-
-    {
-      "id": "templateOptions",
-      "description": "Template options.",
-      "type": "pickString",
-      "options": [
-        "",
-        "-Defaults",
-        "-Recopy",
-        "-Recopy -Defaults",
-        "-Defaults -NoVerify",
-        "-Recopy -NoVerify",
-        "-Recopy -Defaults -NoVerify"
-      ]
     }
   ],
   "tasks": [
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below should persist in significant template updates.
-
     {
       "label": "proj: Generate report",
       "type": "process",
@@ -75,51 +67,36 @@
       "icon": { "id": "repo" },
       "problemMatcher": []
     },
-
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below may be lost in significant template updates.
-
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
+
     {
-      "label": "setup: Copy template",
+      "label": "setup: Sync with template",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": ".tools/scripts/Copy-Template.ps1 ${input:templateOptions}",
+      "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
-      "label": "setup: Setup project",
+      "label": "setup: Sync contributor environment",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": "setup.ps1",
+      "command": "if (!$Env:DEVCONTAINER) {scripts/Sync-Py.ps1}",
       "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Update project",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": "update.ps1",
-      "icon": { "id": "file-symlink-directory" },
-      // "runOptions": {
-      //   "runOn": "folderOpen"
-      // },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
     },
     {
       "label": "setup: Perform first-time setup",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": "first_time_setup.ps1",
+      "command": "scripts/Initialize-Repo.ps1",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
       "label": "setup: Remove *.rej",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "Get-ChildItem -Recurse -Filter *.rej | Remove-Item",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
@@ -127,119 +104,83 @@
 
     // * -------------------------------------------------------------------------- * //
     // * PRE-COMMIT * //
+
     {
       "label": "pre-commit",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "pre-commit",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
     {
       "label": "pre-commit: all",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "pre-commit run --all-files",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit run --all-files",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
 
     // * -------------------------------------------------------------------------- * //
     // * GIT * //
+
     {
       "label": "git: Rebase back to fork",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "git rebase -i --fork-point main",
       "icon": { "id": "git-branch" },
       "problemMatcher": []
     },
 
     // * -------------------------------------------------------------------------- * //
-    // * BLACK * //
-    {
-      "label": "black: Ignore magic comma in this file",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "black -C ${file}",
-      "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-    {
-      "label": "black: Ignore magic comma in all project files",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "black -C src tests",
-      "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
+
     {
-      "label": "task: format and clear notebook",
-      "dependsOrder": "sequence",
-      "dependsOn": ["task: format notebook"],
+      "label": "task: Generate changelog entry",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "nbqa ruff --fix-only ${file}; nb-clean clean --remove-empty-cells --preserve-cell-metadata special tags -- ${file}; black ${file}",
-      "icon": { "id": "notebook" },
+      "command": ". scripts/Initialize-Shell.ps1; python -m copier_python_tools add-change ${input:changeType}",
+      "icon": { "id": "request-changes" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Show tree of packages requesting a dependency",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; pipdeptree --reverse --packages ${input:dependency}",
+      "icon": { "id": "versions" },
       "problemMatcher": []
     },
     {
       "label": "task: Run pytest with coverage",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "pytest --cov --cov-report xml",
-      "icon": { "id": "type-hierarchy-sub" },
+      "command": ". scripts/Initialize-Shell.ps1; pytest --cov  --cov-config pyproject.toml --cov-report xml",
+      "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
-      "label": "task: run core update",
+      "label": "task: Run ruff",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "python .tools/scripts/core_update.py",
-      "icon": { "id": "graph" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Invoke pyright",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": ".tools/scripts/Invoke-Pyright.ps1",
-      "icon": { "id": "type-hierarchy-sub" },
+      "command": ". scripts/Initialize-Shell.ps1; ruff check .; ruff format .",
+      "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "sphinx-build -Ean docs _site; sphinx-autobuild -n docs _site --watch **/*.md",
+      "command": ". scripts/Initialize-Shell.ps1; sphinx-autobuild -T docs _site --ignore **/apidocs",
       "icon": { "id": "book" },
       "problemMatcher": []
     },
     {
       "label": "task: profile this file",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "python -m cProfile -o .prof ${file}",
+      "command": ". scripts/Initialize-Shell.ps1; python -m cProfile -o .prof ${file}",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     },
     {
       "label": "task: view profile results with snakeviz",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "snakeviz .prof",
+      "command": ". scripts/Initialize-Shell.ps1; snakeviz .prof",
       "icon": { "id": "graph-line" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: autoflake current file",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}",
-      "icon": { "id": "code" },
       "problemMatcher": []
     }
   ]

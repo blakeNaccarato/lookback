@@ -1,9 +1,12 @@
-```{include} ../README.md
-:relative-docs: docs/
-:relative-images:
-```
+# `lookback`
 
-```{toctree}
+Utilities for analyzing Trello boards for time tracking, estimation, report writing, and more.
+
+:::{toctree}
 :hidden:
+contributing
+examples/index
 changelog
-```
+apidocs/index
+references
+:::
