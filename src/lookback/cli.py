@@ -46,11 +46,7 @@ def generate_report(days: int = 8, output: Path = REPORT):
 
 
 @app.command()
-def get_comments(
-    board: str,
-    card: str,
-    days: int = 0,
-):
+def get_comments(board: str, card: str, days: int = 0):
     """Get comments from a card."""
     comments = api.get_comments(next(b for b in boards if b.name == board))
     filtered_comments = api.filter_comments(comments, card, days)
