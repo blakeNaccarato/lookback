@@ -3,7 +3,7 @@
 import tomllib
 from pathlib import Path
 
-from pydantic import BaseModel, DirectoryPath, Extra, Field
+from pydantic.v1 import BaseModel, DirectoryPath, Extra, Field
 
 APPDIR = Path("~/.lookback").expanduser()
 
@@ -14,10 +14,8 @@ def init():
     generate_schema()
 
 
-class MyBaseModel(BaseModel):
-    class Config:
-        """Model configuration."""
-
+class MyBaseModel(BaseModel):  # noqa: D101
+    class Config:  # noqa: D106
         extra = Extra.forbid  # To forbid extra fields
 
 

@@ -21,7 +21,6 @@ def indent_report(report: str, title: str) -> str:
 
 def agg_comments(comments: list[board.Action]) -> list[board.Action]:
     """Aggregate comments by their header."""
-
     # Split comments which represent multiple headings into individual comments
     split_comments: list[board.Action] = []
     for comment in comments:
