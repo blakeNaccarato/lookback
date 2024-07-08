@@ -66,7 +66,7 @@ def split_comment(comment: board.Action) -> list[board.Action]:
     ]
     comments: list[board.Action] = []
     for text in texts:
-        subcomment = comment.copy(deep=True)
+        subcomment = comment.model_copy(deep=True)
         subcomment.data.text = text
         comments.append(subcomment)
     return comments
